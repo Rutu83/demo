@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import styles from './product.module.css';
 import Button from '@/components/ui/Button';
 import Accordion from '@/components/ui/Accordion';
+import ProductGallery from '@/components/ui/ProductGallery';
 import { products, faqs } from '@/lib/data';
 
 interface ProductPageProps {
@@ -59,16 +60,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <div className="container">
                     <div className={styles.heroGrid}>
                         <div className={styles.productImage}>
-                            <div className={styles.imagePlaceholder}>
-                                <span>🔧</span>
-                            </div>
-                            <div className={styles.thumbnails}>
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className={styles.thumbnail}>
-                                        <span>🔧</span>
-                                    </div>
-                                ))}
-                            </div>
+                            <ProductGallery
+                                mainImage={product.image}
+                                gallery={product.gallery || []}
+                                productName={product.name}
+                            />
                         </div>
 
                         <div className={styles.productInfo}>
@@ -77,22 +73,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                             <p className={styles.description}>{product.description}</p>
 
                             <div className={styles.features}>
-                                <div className={styles.feature}>
-                                    <span className={styles.featureIcon}>✓</span>
-                                    <span>High Efficiency Motor</span>
-                                </div>
-                                <div className={styles.feature}>
-                                    <span className={styles.featureIcon}>✓</span>
-                                    <span>Low Noise Operation</span>
-                                </div>
-                                <div className={styles.feature}>
-                                    <span className={styles.featureIcon}>✓</span>
-                                    <span>Energy Saving Design</span>
-                                </div>
-                                <div className={styles.feature}>
-                                    <span className={styles.featureIcon}>✓</span>
-                                    <span>Easy Maintenance</span>
-                                </div>
+                                {product.features && product.features.map((feature, i) => (
+                                    <div key={i} className={styles.feature}>
+                                        <span className={styles.featureIcon}>✓</span>
+                                        <span>{feature}</span>
+                                    </div>
+                                ))}
                             </div>
 
                             <div className={styles.ctas}>
@@ -118,65 +104,48 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     <div className={styles.specTable}>
                         <table>
                             <tbody>
-                                <tr>
-                                    <td>Model</td>
-                                    <td>SL-{product.id.toUpperCase()}-75</td>
-                                </tr>
-                                <tr>
-                                    <td>Power</td>
-                                    <td>75 kW / 100 HP</td>
-                                </tr>
-                                <tr>
-                                    <td>Working Pressure</td>
-                                    <td>7-13 bar</td>
-                                </tr>
-                                <tr>
-                                    <td>Free Air Delivery</td>
-                                    <td>10-14 m³/min</td>
-                                </tr>
-                                <tr>
-                                    <td>Noise Level</td>
-                                    <td>68 ± 2 dB(A)</td>
-                                </tr>
-                                <tr>
-                                    <td>Cooling Method</td>
-                                    <td>Air Cooled</td>
-                                </tr>
-                                <tr>
-                                    <td>Dimensions (L×W×H)</td>
-                                    <td>1800 × 1100 × 1650 mm</td>
-                                </tr>
-                                <tr>
-                                    <td>Weight</td>
-                                    <td>1200 kg</td>
-                                </tr>
+                                {product.specifications && Object.entries(product.specifications).map(([key, value]) => (
+                                    <tr key={key}>
+                                        <td>{key.charAt(0).toUpperCase() + key.slice(1)}</td>
+                                        <td>{String(value)}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
+            {/* Product Video */}
+            {product.video && (
+                <section className={`section ${styles.videoSection}`}>
+                    <div className="container">
+                        <h2>Product Video</h2>
+                        <div className={styles.videoWrapper}>
+                            <video
+                                controls
+                                poster={product.image}
+                                className={styles.productVideo}
+                            >
+                                <source src={product.video} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {/* Applications */}
             <section className={`section ${styles.applications}`}>
                 <div className="container">
                     <h2>Applications</h2>
                     <div className={styles.appGrid}>
-                        <div className={styles.appCard}>
-                            <span>🏭</span>
-                            <h4>Manufacturing</h4>
-                        </div>
-                        <div className={styles.appCard}>
-                            <span>🔧</span>
-                            <h4>Automotive</h4>
-                        </div>
-                        <div className={styles.appCard}>
-                            <span>🏗️</span>
-                            <h4>Construction</h4>
-                        </div>
-                        <div className={styles.appCard}>
-                            <span>💊</span>
-                            <h4>Pharmaceutical</h4>
-                        </div>
+                        {product.applications && product.applications.map((app, i) => (
+                            <div key={i} className={styles.appCard}>
+                                <span>{['🏭', '🔧', '🏗️', '💊', '🍔', '💻', '🧪', '🚗'][i % 8]}</span>
+                                <h4>{app}</h4>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -199,7 +168,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         {relatedProducts.map((p) => (
                             <a key={p.id} href={`/products/${p.id}`} className={styles.relatedCard}>
                                 <div className={styles.relatedImage}>
-                                    <span>🔧</span>
+                                    <img src={p.image} alt={p.name} />
                                 </div>
                                 <h4>{p.name}</h4>
                                 <span className={styles.viewMore}>View Details →</span>

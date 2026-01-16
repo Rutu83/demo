@@ -27,13 +27,11 @@ export default function Footer() {
                         {/* Company Info */}
                         <div className={styles.footerColumn}>
                             <div className={styles.footerLogo}>
-                                <div className={styles.logoIcon}>
-                                    <span>S</span>
-                                </div>
-                                <div className={styles.logoText}>
-                                    <span className={styles.brandName}>SOLLANT</span>
-                                    <span className={styles.tagline}>Air Compressor</span>
-                                </div>
+                                <img
+                                    src="/logo.jpeg"
+                                    alt="INDUSAIR - Air Compressor"
+                                    className={styles.logoImage}
+                                />
                             </div>
                             <p className={styles.companyDesc}>
                                 Sollant is a professional air compressor manufacturer with over 20 years of export experience. We provide high-quality, durable, and reliable air compressor solutions for industrial applications worldwide.

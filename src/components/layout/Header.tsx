@@ -35,13 +35,11 @@ export default function Header() {
             <nav className={styles.nav}>
                 <div className={`container ${styles.navContent}`}>
                     <Link href="/" className={styles.logo}>
-                        <div className={styles.logoIcon}>
-                            <span className={styles.logoS}>S</span>
-                        </div>
-                        <div className={styles.logoText}>
-                            <span className={styles.brandName}>SOLLANT</span>
-                            <span className={styles.tagline}>Air Compressor</span>
-                        </div>
+                        <img 
+                            src="/logo.jpeg" 
+                            alt="INDUSAIR - Air Compressor" 
+                            className={styles.logoImage}
+                        />
                     </Link>
 
                     <ul className={`${styles.navLinks} ${isMenuOpen ? styles.navLinksOpen : ''}`}>

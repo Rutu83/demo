@@ -62,6 +62,27 @@
     margin-bottom: var(--space-md);
 }
 
+.mainImage {
+    aspect-ratio: 1;
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-bottom: var(--space-md);
+}
+
+.mainImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
 .thumbnails {
     display: flex;
     gap: var(--space-sm);
@@ -197,6 +218,32 @@
     width: 40%;
 }
 
+/* Product Video */
+.videoSection {
+    background-color: var(--color-bg-white);
+}
+
+.videoSection h2 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-xl);
+    text-align: center;
+}
+
+.videoWrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background-color: var(--color-dark);
+}
+
+.productVideo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 /* Applications */
 .applications {
     background-color: var(--color-bg-white);
@@ -288,8 +335,23 @@
 }
 
 .relatedImage {
-    font-size: 64px;
+    width: 100%;
+    height: 150px;
     margin-bottom: var(--space-md);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--color-bg-light);
+}
+
+.relatedImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+}
+
+.relatedCard:hover .relatedImage img {
+    transform: scale(1.05);
 }
 
 .relatedCard h4 {

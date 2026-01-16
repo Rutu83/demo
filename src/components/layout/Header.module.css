@@ -91,6 +91,12 @@
     letter-spacing: 1px;
 }
 
+.logoImage {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
 /* Nav Links */
 .navLinks {
     display: flex;

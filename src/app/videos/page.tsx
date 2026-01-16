@@ -1,20 +1,22 @@
 import styles from './videos.module.css';
+import { products } from '@/lib/data';
+import Link from 'next/link';
 
 export const metadata = {
     title: 'Product Videos - Sollant Air Compressor',
     description: 'Watch our product demonstration videos and factory tour to see Sollant air compressors in action.',
 };
 
-const videos = [
-    { id: 1, title: 'Sollant Factory Tour', description: 'Take a virtual tour of our 15,000 m² manufacturing facility' },
-    { id: 2, title: 'Screw Compressor Installation', description: 'Complete installation guide for our screw air compressors' },
-    { id: 3, title: 'VSD Compressor Technology', description: 'Understanding variable speed drive technology' },
-    { id: 4, title: 'Oil-Free Compressor Features', description: 'Features and benefits of our oil-free compressor range' },
-    { id: 5, title: 'Maintenance Guide', description: 'Step-by-step maintenance tutorial for long compressor life' },
-    { id: 6, title: 'Quality Control Process', description: 'See our rigorous quality testing procedures' },
-    { id: 7, title: 'Customer Testimonials', description: 'Hear from our satisfied customers worldwide' },
-    { id: 8, title: 'Product Comparison', description: 'Compare different compressor models for your needs' },
-];
+// Get all products that have videos
+const productVideos = products
+    .filter((product) => product.video)
+    .map((product) => ({
+        id: product.id,
+        title: product.name,
+        description: product.description,
+        video: product.video,
+        poster: product.image,
+    }));
 
 export default function VideosPage() {
     return (
@@ -27,7 +29,7 @@ export default function VideosPage() {
                         <h1>See Our Products in Action</h1>
                         <p>
                             Watch demonstration videos, factory tours, and technical guides
-                            to learn more about Sollant air compressors.
+                            to learn more about INDUSAIR air compressors.
                         </p>
                     </div>
                 </div>
@@ -37,20 +39,34 @@ export default function VideosPage() {
             <section className={`section ${styles.videos}`}>
                 <div className="container">
                     <div className={styles.grid}>
-                        {videos.map((video) => (
-                            <div key={video.id} className={styles.videoCard}>
+                        {productVideos.map((videoItem) => (
+                            <div key={videoItem.id} className={styles.videoCard}>
                                 <div className={styles.videoWrapper}>
-                                    <div className={styles.videoPlaceholder}>
-                                        <span className={styles.playButton}>▶</span>
-                                    </div>
+                                    <video
+                                        controls
+                                        poster={videoItem.poster}
+                                        className={styles.videoPlayer}
+                                    >
+                                        <source src={videoItem.video} type="video/mp4" />
+                                        Your browser does not support the video tag.
+                                    </video>
                                 </div>
                                 <div className={styles.videoInfo}>
-                                    <h3>{video.title}</h3>
-                                    <p>{video.description}</p>
+                                    <h3>{videoItem.title}</h3>
+                                    <p>{videoItem.description}</p>
+                                    <Link href={`/products/${videoItem.id}`} className={styles.viewProduct}>
+                                        View Product →
+                                    </Link>
                                 </div>
                             </div>
                         ))}
                     </div>
+
+                    {productVideos.length === 0 && (
+                        <div className={styles.noVideos}>
+                            <p>No product videos available at this time.</p>
+                        </div>
+                    )}
                 </div>
             </section>
         </div>

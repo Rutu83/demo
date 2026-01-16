@@ -58,9 +58,7 @@ export default function BlogPage() {
                 <div className="container">
                     <div className={styles.featuredPost}>
                         <div className={styles.featuredImage}>
-                            <div className={styles.imagePlaceholder}>
-                                <span>📰</span>
-                            </div>
+                            <img src={blogPosts[0].image} alt={blogPosts[0].title} />
                         </div>
                         <div className={styles.featuredContent}>
                             <span className={styles.featuredBadge}>Featured</span>
